@@ -1,6 +1,7 @@
 from groq import Groq
 from dotenv import load_dotenv
 import os
+import groq
 from telegram.ext import ContextTypes
 
 load_dotenv()
@@ -20,14 +21,17 @@ def generate_response(message: str, context: ContextTypes.DEFAULT_TYPE):
         }
     ]
     response_queue = ""
-    for resp in chatbot.chat.completions.create(
-        messages=context.user_data.get("messages"),
-        model=context.user_data.get("model", "llama3-8b-8192"),
-        stream=True,
-    ):
-        if resp.choices[0].delta.content:
-            response_queue += resp.choices[0].delta.content
-        if len(response_queue) > 100:
-            yield response_queue
-            response_queue = ""
+    try:
+        for resp in chatbot.chat.completions.create(
+            messages=context.user_data.get("messages"),
+            model=context.user_data.get("model", "llama3-8b-8192"),
+            stream=True,
+        ):
+            if resp.choices[0].delta.content:
+                response_queue += resp.choices[0].delta.content
+            if len(response_queue) > 100:
+                yield response_queue
+                response_queue = ""
+    except groq.GroqError as e:
+        yield f"Error: {e}\nStart a new conversation, click /new"
     yield response_queue

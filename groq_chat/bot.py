@@ -20,6 +20,7 @@ from groq_chat.handlers import (
     get_system_prompt,
     cancelled_system_prompt,
     info_command_handler,
+    error_handler,
 )
 from groq_chat.filters import AuthFilter, MessageFilter
 from dotenv import load_dotenv
@@ -88,6 +89,8 @@ def start_bot():
     app.add_handler(
         CallbackQueryHandler(change_model_callback_handler, pattern="^change_model_")
     )
+
+    app.add_error_handler(error_handler)
 
     # Run the bot until the user presses Ctrl-C
     app.run_polling(allowed_updates=Update.ALL_TYPES)
