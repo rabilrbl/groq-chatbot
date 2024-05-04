@@ -1,3 +1,4 @@
 groq==0.5.0
 python-dotenv==1.0.1
 python-telegram-bot==21.1.1
+mongopersistence==0.3.0
