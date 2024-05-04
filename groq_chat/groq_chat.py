@@ -13,10 +13,12 @@ chatbot = Groq(
 
 def generate_response(message: str, context: ContextTypes.DEFAULT_TYPE):
     """Generate a response to a message"""
-    context.user_data["messages"] = context.user_data.get("messages", []).append({
-        "role": "user",
-        "content": message,
-    })
+    context.user_data["messages"] = context.user_data.get("messages", []) + [
+        {
+            "role": "user",
+            "content": message,
+        }
+    ]
     response_queue = ""
     for resp in chatbot.chat.completions.create(
         messages=context.user_data.get("messages"),
