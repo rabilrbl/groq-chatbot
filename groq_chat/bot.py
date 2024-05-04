@@ -46,6 +46,7 @@ persistence = MongoPersistence(
     name_col_conversations_data="conversations_data",
     create_col_if_not_exist=True,  # optional
     ignore_general_data=["cache"],
+    update_interval=10,
 )
 
 
