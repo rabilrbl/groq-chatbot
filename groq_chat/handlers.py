@@ -110,7 +110,7 @@ async def get_system_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     """Get the system prompt"""
     system_prompt = update.message.text
     if system_prompt.lower().strip() == "clear":
-        context.chat_data["system_prompt"] = ""
+        context.user_data.pop("system_prompt", None)
         await update.message.reply_text("System prompt cleared.")
     else:
         context.user_data["system_prompt"] = system_prompt
