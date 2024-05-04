@@ -57,9 +57,6 @@ def start_bot():
         .persistence(persistence)
         .build()
     )
-    app.add_error_handler(
-        lambda _, __: logger.error("Exception while handling an update:", exc_info=True)
-    )
 
     app.add_handler(CommandHandler("start", start, filters=AuthFilter))
     app.add_handler(CommandHandler("help", help_command, filters=AuthFilter))
