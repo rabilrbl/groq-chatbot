@@ -123,8 +123,8 @@ async def get_system_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE) 
 
 async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle messages"""
-    if "model" not in context.chat_data:
-        context.chat_data["model"] = "llama3-8b-8192"
+    if "model" not in context.user_data:
+        context.user_data["model"] = "llama3-8b-8192"
 
     if "messages" not in context.user_data:
         context.user_data["messages"] = []
