@@ -4,11 +4,10 @@ from telegram.error import NetworkError, BadRequest
 from telegram.constants import ChatAction, ParseMode
 from groq_chat.html_format import format_message
 from groq_chat.groq_chat import chatbot, generate_response
-from groq import Groq
+import asyncio
 
 SYSTEM_PROMPT_SP = 1
 CANCEL_SP = 2
-
 
 def new_chat(context: ContextTypes.DEFAULT_TYPE) -> None:
     if context.user_data.get("system_prompt") is not None:
@@ -116,7 +115,7 @@ async def get_system_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     else:
         context.user_data["system_prompt"] = system_prompt
         await update.message.reply_text(
-            "System prompt changed. Send /new to start a new chat session."
+            "System prompt changed."
         )
     new_chat(context)
     return ConversationHandler.END
@@ -136,8 +135,8 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     if not message:
         return
 
+    asyncio.run_coroutine_threadsafe(update.message.chat.send_action(ChatAction.TYPING), loop=asyncio.get_event_loop())
     full_output_message = ""
-    await update.message.chat.send_action(ChatAction.TYPING)
     for message in generate_response(message, context):
         if message:
             full_output_message += message
