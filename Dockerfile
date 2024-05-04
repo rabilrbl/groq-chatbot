@@ -1,5 +1,8 @@
 FROM python:3.12-alpine as builder
 
+RUN apk add --no-cache --virtual .build-deps \
+    git
+
 RUN pip install --upgrade pip
 
 COPY requirements.txt /tmp/requirements.txt
