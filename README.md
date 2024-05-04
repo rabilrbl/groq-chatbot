@@ -1,6 +1,6 @@
 <div align="center">
 
-  # HuggingFace Chat Telegram Bot
+  # Groq API Telegram Bot
   
   **A Python Telegram bot powered by [Groq API](https://console.groq.com/).**
 
@@ -61,8 +61,7 @@ docker run --env-file .env groq-chatbot
     * `pip install -r requirements.txt` (if not using pipenv)
 3. Create a `.env` file and add the following environment variables:
     * `BOT_TOKEN`: Your Telegram Bot API token. You can get one by talking to [@BotFather](https://t.me/BotFather).
-    * `HF_EMAIL`: Your HuggingFace email address. (optional)
-    * `HF_PASSWORD`: Your HuggingFace password. (optional)
+    * `GROQ_API_KEY`: Your Groq API key. You can get one by signing up at [Groq Console](https://console.groq.com/keys).
     * `AUTHORIZED_USERS`: A comma-separated list of Telegram usernames or user IDs that are authorized to access the bot. (optional) Example value: `shonan23,1234567890`
 4. Run the bot:
     * `python main.py` (if not using pipenv)
