@@ -23,12 +23,24 @@ from groq_chat.handlers import (
 )
 from groq_chat.filters import AuthFilter, MessageFilter
 from dotenv import load_dotenv
+import logging
 
 load_dotenv()
 
+# Enable logging
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+)
+# set higher logging level for httpx to avoid all GET and POST requests being logged
+logging.getLogger("httpx").setLevel(logging.WARNING)
+
+logger = logging.getLogger(__name__)
+
 
 def start_bot():
+    logger.info("Starting bot")
     app = Application.builder().token(os.getenv("BOT_TOKEN")).build()
+    app.add_error_handler(lambda _, __: logger.error("Exception while handling an update:", exc_info=True))
 
     app.add_handler(CommandHandler("start", start, filters=AuthFilter))
     app.add_handler(CommandHandler("help", help_command, filters=AuthFilter))
