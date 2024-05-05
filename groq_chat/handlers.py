@@ -150,7 +150,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             )
     context.user_data["messages"] = context.user_data.get("messages", []) + [
         {
-            "role": "system",
+            "role": "assistant",
             "content": full_output_message,
         }
     ]
