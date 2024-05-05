@@ -60,7 +60,7 @@ def start_bot():
 
     # Add persistence if available
     if persistence:
-        app_builder.persistence = persistence
+        app_builder.persistence(persistence)
 
     # Build the app
     app = app_builder.build()
